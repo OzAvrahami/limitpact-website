@@ -1,0 +1,37 @@
+name: Enhancement
+description: Improve existing behavior.
+title: "[Enhancement] "
+labels:
+  - enhancement
+body:
+  - type: textarea
+    id: current
+    attributes:
+      label: Current behavior
+    validations:
+      required: true
+  - type: textarea
+    id: desired
+    attributes:
+      label: Desired improvement
+    validations:
+      required: true
+  - type: textarea
+    id: value
+    attributes:
+      label: Why it matters
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance notes
+  - type: dropdown
+    id: scope
+    attributes:
+      label: Scope
+      description: Optional component context.
+      options:
+        - Website
+        - Cross-cutting / not sure
+

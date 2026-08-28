@@ -1,0 +1,42 @@
+name: Feature
+description: Propose a new capability.
+title: "[Feature] "
+labels:
+  - feature
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem or motivation
+    validations:
+      required: true
+  - type: textarea
+    id: capability
+    attributes:
+      label: Proposed capability
+    validations:
+      required: true
+  - type: textarea
+    id: outcome
+    attributes:
+      label: Expected outcome
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance notes
+      description: Describe the conditions that would make this complete.
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
+  - type: dropdown
+    id: scope
+    attributes:
+      label: Scope
+      description: Optional component context.
+      options:
+        - Website
+        - Cross-cutting / not sure
+

@@ -1,0 +1,52 @@
+name: Bug
+description: Report incorrect existing behavior.
+title: "[Bug] "
+labels:
+  - bug
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: What is wrong, and what impact does it have?
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: Provide the shortest reliable reproduction.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Screenshots or evidence
+      description: Add logs, screenshots, or other evidence when relevant.
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment or context
+      description: Include relevant browser, operating system, and setup details.
+    validations:
+      required: true
+  - type: textarea
+    id: possible-cause
+    attributes:
+      label: Possible cause
+      description: Optional implementation clues or suspected cause.
+  - type: dropdown
+    id: scope
+    attributes:
+      label: Scope
+      description: Optional component context.
+      options:
+        - Website
+        - Cross-cutting / not sure
+
