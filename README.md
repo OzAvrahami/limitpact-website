@@ -1,5 +1,10 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+Contact and Private Beta submissions use the existing Railway Postgres service and
+Resend notifications. See [submission setup and operations](docs/form-submissions.md)
+for the migration, exact server configuration, safe local tests, retry commands,
+and pending production acceptance checks. Use Node.js 24 LTS.
+
 ## Getting Started
 
 First, run the development server:

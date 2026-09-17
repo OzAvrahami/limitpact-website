@@ -1,6 +1,7 @@
 "use client";
 
 import { createContext, useContext, useEffect, useRef, useState } from "react";
+import SubmissionForm from "./SubmissionForm";
 
 const ModalContext = createContext(null);
 
@@ -38,12 +39,15 @@ export function ModalProvider({ children }) {
       if (event.key === "Escape") closeModal();
       if (event.key !== "Tab" || !contentRef.current) return;
       const focusable = contentRef.current.querySelectorAll(
-        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
+        'button:not(:disabled), [href], input:not(:disabled):not([tabindex="-1"]), select:not(:disabled), textarea:not(:disabled), [tabindex]:not([tabindex="-1"])',
       );
       if (!focusable.length) return;
       const first = focusable[0];
       const last = focusable[focusable.length - 1];
-      if (event.shiftKey && document.activeElement === first) {
+      if (!Array.from(focusable).includes(document.activeElement)) {
+        event.preventDefault();
+        (event.shiftKey ? last : first).focus();
+      } else if (event.shiftKey && document.activeElement === first) {
         event.preventDefault();
         last.focus();
       } else if (!event.shiftKey && document.activeElement === last) {
@@ -85,10 +89,8 @@ export function ModalProvider({ children }) {
             </button>
             {sent ? (
               <Success type={modal} />
-            ) : modal === "beta" ? (
-              <BetaForm onSuccess={() => setSent(true)} />
             ) : (
-              <ContactForm onSuccess={() => setSent(true)} />
+              <SubmissionForm key={modal} type={modal} onSuccess={() => setSent(true)} />
             )}
           </div>
         </div>
@@ -108,70 +110,17 @@ export function ModalButton({ modal, className = "", children }) {
 
 function Success({ type }) {
   const isBeta = type === "beta";
+  const headingRef = useRef(null);
+  useEffect(() => { headingRef.current?.focus(); }, []);
   return (
     <div className="formSuccess" role="status">
       <span className="successIcon" aria-hidden="true">✓</span>
-      <h3 id="modal-title">{isBeta ? "You're on the list" : "Message received"}</h3>
+      <h3 id="modal-title" tabIndex={-1} ref={headingRef}>{isBeta ? "You're on the list" : "Message received"}</h3>
       <p>
         {isBeta
           ? "Thanks for your interest in the LimitPact private beta. We'll reach out as spots open up."
           : "Thanks for reaching out. We'll reply to your email as soon as we can."}
       </p>
     </div>
-  );
-}
-
-function BetaForm({ onSuccess }) {
-  return (
-    <form className="modalForm" onSubmit={(event) => { event.preventDefault(); onSuccess(); }}>
-      <div className="formIntro">
-        <h3 id="modal-title">Join the private beta</h3>
-        <p>Tell us where you trade and we&apos;ll be in touch. No account is created yet.</p>
-      </div>
-      <Field label="Name" id="beta-name">
-        <input id="beta-name" name="name" required autoComplete="name" placeholder="Your name" />
-      </Field>
-      <Field label="Email" id="beta-email">
-        <input id="beta-email" name="email" required type="email" autoComplete="email" placeholder="you@example.com" />
-      </Field>
-      <Field label="Trading platform" id="beta-platform">
-        <select id="beta-platform" name="platform" defaultValue="Tradovate">
-          <option>Tradovate</option>
-          <option>NinjaTrader</option>
-          <option>Other</option>
-        </select>
-      </Field>
-      <button className="button buttonPrimary formSubmit" type="submit">Request beta access</button>
-    </form>
-  );
-}
-
-function ContactForm({ onSuccess }) {
-  return (
-    <form className="modalForm" onSubmit={(event) => { event.preventDefault(); onSuccess(); }}>
-      <div className="formIntro">
-        <h3 id="modal-title">Contact LimitPact</h3>
-        <p>For traders and integration partners alike. We read every message.</p>
-      </div>
-      <Field label="Name" id="contact-name">
-        <input id="contact-name" name="name" required autoComplete="name" placeholder="Your name" />
-      </Field>
-      <Field label="Email" id="contact-email">
-        <input id="contact-email" name="email" required type="email" autoComplete="email" placeholder="you@example.com" />
-      </Field>
-      <Field label="Message" id="contact-message">
-        <textarea id="contact-message" name="message" required rows="4" placeholder="How can we help?" />
-      </Field>
-      <button className="button buttonPrimary formSubmit" type="submit">Send message</button>
-    </form>
-  );
-}
-
-function Field({ label, id, children }) {
-  return (
-    <label className="formField" htmlFor={id}>
-      <span>{label}</span>
-      {children}
-    </label>
   );
 }
