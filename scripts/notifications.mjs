@@ -2,10 +2,19 @@ import { getDatabase } from '../src/server/database.mjs';
 import { createSubmissionStore } from '../src/server/submission-store.mjs';
 import { retryNotifications, reconcileNotification, resetUnsentNotification } from '../src/server/notifications.mjs';
 import { UUID } from '../src/server/validation.mjs';
+import { scheduledNotificationsEnabled } from '../src/server/notification-job-config.mjs';
 
 let db;
-try {
-  const [action, id, providerId] = process.argv.slice(2);
+async function run() {
+  let [action, id, providerId] = process.argv.slice(2);
+  if (action === 'scheduled-retry') {
+    if (!scheduledNotificationsEnabled()) {
+      console.log('Scheduled notifications disabled; no database or email operation performed.');
+      return;
+    }
+    if (id || providerId) throw new Error('scheduled_retry_takes_no_arguments');
+    action = 'retry';
+  }
   if (id && !UUID.test(id)) throw new Error('invalid_id');
   if (!['retry', 'inspect', 'reconcile', 'reset-confirmed-unsent'].includes(action)) throw new Error('invalid_action');
   if (action !== 'retry' && !id) throw new Error('id_required');
@@ -28,8 +37,12 @@ try {
     await resetUnsentNotification(store, id);
     console.log('Marked pending after operator confirmation that no provider message exists. Run retry separately.');
   }
+}
+
+try {
+  await run();
 } catch {
-  console.error('Notification operation failed. Check the command, configuration, database access, and provider message match. No credentials, submitted fields, or provider error bodies are logged.');
+  console.error('Notification operation failed. Check the command, configuration, scheduled release revision, database access, and provider message match. No credentials, submitted fields, or provider error bodies are logged.');
   process.exitCode = 1;
 } finally {
   await db?.close();

@@ -2,6 +2,8 @@
 
 Issue: [#1](https://github.com/OzAvrahami/limitpact-website/issues/1). Production acceptance remains pending. This work does not implement analytics or issue #2.
 
+Release preparation, dependency advisory fixes, read-only Railway findings, and the ordered release gate are recorded in [release-readiness.md](release-readiness.md). The prepared, disabled scheduler configuration is in [deploy/notifications.md](../deploy/notifications.md).
+
 ## Infrastructure and design
 
 Read-only inspection on September 17, 2026 found Railway project **LimitPact website**, services **Postgres** and **tradeguard-website**, and an existing `DATABASE_URL` variable on the web service. No database or email code existed in this repository; the desktop app uses local JSON state, which is unsuitable for website inquiries. Reuse that Railway Postgres service, with the isolated `limitpact_web` schema. No production connection, migration, deployment, credential change, or email was performed during implementation.
@@ -74,7 +76,7 @@ npm run notifications -- inspect SUBMISSION_UUID
 npm run notifications -- reconcile SUBMISSION_UUID
 ```
 
-Arrange a protected scheduler (e.g. a Railway cron service using this source revision) to run `npm run notifications -- retry` every five minutes, and monitor its exit status plus the query below. A manual operator can use the same command at this site's initial volume. The scheduler is **not provisioned by this change**. Ensure someone reviews failures well within 23 hours. Monitor oldest pending work, manual-review rows, provider bounces, and provider rate limits; after fixing a failure, rerun the command.
+Arrange a protected scheduler using the [prepared configuration](../deploy/notifications.md) to run the guarded `scheduled-retry` command every five minutes from the website's exact deployed source revision. Monitor its exit status plus the query below. A manual operator can use `retry` at this site's initial volume. The scheduler is **not provisioned by this change**. Ensure someone reviews failures well within 23 hours. Monitor oldest pending work, manual-review rows, provider bounces, and provider rate limits; after fixing a failure, rerun the command.
 
 ```sql
 SELECT notification_status, delivery_status, last_error_code,

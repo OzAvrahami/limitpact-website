@@ -5,6 +5,9 @@ Resend notifications. See [submission setup and operations](docs/form-submission
 for the migration, exact server configuration, safe local tests, retry commands,
 and pending production acceptance checks. Use Node.js 24 LTS.
 
+Before merging, follow the [release readiness and ordered release plan](docs/release-readiness.md).
+Railway automatically deploys `main`; required configuration and schema must be ready first.
+
 ## Getting Started
 
 First, run the development server:
