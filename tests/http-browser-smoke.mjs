@@ -55,6 +55,11 @@ try {
   const inspection = JSON.parse((await runScript('scripts/notifications.mjs', 'inspect', accepted.submissionId)).stdout);
   assert.equal(inspection.notification, 'pending');
   assert.equal(inspection.delivery, 'unknown');
+  const from = new Date(inspection.acceptedAt).toISOString().slice(0, 10);
+  const to = new Date(Date.now() + 86400000).toISOString().slice(0, 10);
+  const report = JSON.parse((await runScript('scripts/conversions.mjs', '--from', from, '--to', to,
+    '--format', 'json', '--exclude-id', accepted.submissionId)).stdout);
+  assert.deepEqual(report.totals, { contact: 0, privateBeta: 1, total: 1, excluded: 1 });
 
   browser = await chromium.launch({ channel: process.env.PLAYWRIGHT_CHANNEL || undefined, headless: true });
   const page = await browser.newPage({ viewport: { width: 1280, height: 900 } });
@@ -112,7 +117,7 @@ try {
   await db.close();
   db = new PGlite(directory);
   assert.equal((await db.query('SELECT count(*)::int AS n FROM limitpact_web.submissions')).rows[0].n, 5, 'Accepted records survive database restart');
-  console.log('PASS: built HTTP endpoints, PostgreSQL protocol, both browser forms, focus/escape, mobile database failure/retry, and persistence across restart. No real email sent.');
+  console.log('PASS: built HTTP endpoints, PostgreSQL protocol, aggregate report CLI, both browser forms, focus/escape, mobile database failure/retry, and persistence across restart. No real email sent.');
 } catch (error) {
   console.error(error);
   // This fixture only handles synthetic data; still omit child/provider details.

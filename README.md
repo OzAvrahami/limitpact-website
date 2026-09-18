@@ -3,10 +3,14 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 Contact and Private Beta submissions use the existing Railway Postgres service and
 Resend notifications. See [submission setup and operations](docs/form-submissions.md)
 for the migration, exact server configuration, safe local tests, retry commands,
-and pending production acceptance checks. Use Node.js 24 LTS.
+and production acceptance evidence. Use Node.js 24 LTS.
+
+For retained Cloudflare traffic measurement and the protected, read-only
+`npm run conversions` report, see [analytics operations](docs/analytics.md).
 
 Before merging, follow the [release readiness and ordered release plan](docs/release-readiness.md).
-Railway automatically deploys `main`; required configuration and schema must be ready first.
+Website and retry-worker auto-deploy are disabled. Merging does not authorize deployment;
+follow the recorded manual release and same-revision scheduler promotion workflow.
 
 ## Getting Started
 

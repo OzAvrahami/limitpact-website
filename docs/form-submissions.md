@@ -1,5 +1,7 @@
 # Contact and Private Beta submissions
 
+For the later owner-approved traffic/conversion reporting scope and read-only aggregate CLI, see [analytics.md](analytics.md). Issue #1's final [owner acceptance](https://github.com/OzAvrahami/limitpact-website/issues/1#issuecomment-5727054088) supersedes this document's preparation-time pending status below.
+
 Issue: [#1](https://github.com/OzAvrahami/limitpact-website/issues/1). Production acceptance remains pending. This work does not implement analytics or issue #2.
 
 Release preparation, dependency advisory fixes, read-only Railway findings, and the ordered release gate are recorded in [release-readiness.md](release-readiness.md). The prepared, disabled scheduler configuration is in [deploy/notifications.md](../deploy/notifications.md).
