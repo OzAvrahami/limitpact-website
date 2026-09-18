@@ -12,6 +12,7 @@
     "test:watch": "vitest",
     "db:migrate": "node --conditions=react-server --env-file-if-exists=.env.local scripts/migrate.mjs",
     "notifications": "node --conditions=react-server --env-file-if-exists=.env.local scripts/notifications.mjs",
+    "conversions": "node --conditions=react-server --env-file-if-exists=.env.local scripts/conversions.mjs",
     "test:browser": "node tests/http-browser-smoke.mjs"
   },
   "dependencies": {

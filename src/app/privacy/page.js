@@ -22,7 +22,7 @@ export default function PrivacyPolicy() {
             <h1>Privacy Policy</h1>
             <div className="legalDates">
               <span><strong>Effective Date:</strong> August 15, 2026</span>
-              <span><strong>Last Updated:</strong> August 15, 2026</span>
+              <span><strong>Last Updated:</strong> September 18, 2026</span>
             </div>
             <p>LimitPact is a software product operated by <strong>Oz Avrahami</strong>, an individual based in Israel (&quot;LimitPact&quot;, &quot;we&quot;, &quot;us&quot;, or &quot;our&quot;).</p>
             <p>This Privacy Policy explains how we collect, use, store, and disclose personal information when you use the LimitPact website, desktop application, private beta, account integrations, and related services (collectively, the <strong>&quot;Services&quot;</strong>).</p>
@@ -178,7 +178,8 @@ export default function PrivacyPolicy() {
 
             <LegalSection number="8" title="Cookies and Similar Technologies">
               <p>At this stage, LimitPact does not use advertising cookies, behavioral advertising trackers, or advertising pixels.</p>
-              <p>We also do not currently use third-party analytics for behavioral tracking.</p>
+              <p>We use Cloudflare Web Analytics to understand website visits, page views, referring websites, country and browser/device categories, and page performance. Cloudflare describes this service as using no analytics cookies or local storage and no fingerprinting of individuals. We do not send the names, email addresses, messages, or trading-platform selections entered in our forms to Web Analytics.</p>
+              <p>We also calculate separate aggregate daily counts of accepted Contact submissions and Private Beta registrations from our saved submission records. These internal reports contain counts rather than individual records or submitted personal information. They do not identify unique people, attribute submissions to campaigns, or link individual website visits to submissions.</p>
               <p>The website may use strictly necessary storage or similar technologies where required for:</p>
               <ul><li>core functionality;</li><li>security;</li><li>session operation; or</li><li>user-interface preferences.</li></ul>
               <p>If our use of cookies or analytics changes materially, we will update this Privacy Policy and provide any consent mechanism required by applicable law.</p>
